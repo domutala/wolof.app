@@ -4,6 +4,7 @@ import 'package:wolofbat/routes/index.dart';
 import 'package:wolofbat/theme/settings.dart';
 
 final statusBarHeight = ValueNotifier<double>(0);
+final currentTab = ValueNotifier<int>(0);
 
 void main() {
   return runApp(

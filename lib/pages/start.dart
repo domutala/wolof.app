@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:one_context/one_context.dart';
 import 'package:wolofbat/main.dart';
 
 class StartPage extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:wolofbat/theme/index.dart';
 import 'package:wolofbat/theme/input.dart';
 
 var theme = ThemeData(
+  useMaterial3: true,
   fontFamily: 'Roboto',
   primaryColor: primaryColor,
   primaryColorLight: lightColor,
@@ -61,6 +62,7 @@ var theme = ThemeData(
 );
 
 var darkTheme = ThemeData(
+  useMaterial3: true,
   fontFamily: 'Roboto',
   primaryColor: primaryColor,
   primaryColorLight: darkColor,

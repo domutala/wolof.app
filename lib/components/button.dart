@@ -41,7 +41,7 @@ class _ButtonState extends State<Button> {
           shape: shape,
           elevation: MaterialStateProperty.all(widget.elevation),
           padding: widget.padding != null
-              ? MaterialStateProperty.all(EdgeInsets.zero)
+              ? MaterialStateProperty.all(EdgeInsets.all(widget.padding!))
               : null,
         );
 
