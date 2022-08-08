@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "782560533932",
+    "project_id": "wolofsn",
+    "storage_bucket": "wolofsn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782560533932:android:a026f2865db43cb45bae09",
+        "android_client_info": {
+          "package_name": "io.mood.wolof.app.wolofbat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782560533932-5km7og1bbq6j82qr6o6e73oko3kir09v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTPoGNsUqWXon-7OI41HH7G5u3ate7AoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782560533932-5km7og1bbq6j82qr6o6e73oko3kir09v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "782560533932-7vpanbc6r9v4rt4vmbenbo7p6vg5ukv8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.mood.wolof.app.wolofbat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

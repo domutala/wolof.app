@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wolofbat/main.dart';
 import 'package:wolofbat/widgets/loader.dart';
 import 'package:wolofbat/widgets/word.dart';
 
@@ -86,6 +87,7 @@ class _BookmarkState extends State<Bookmark>
     super.build(context);
     return Column(
       children: [
+        Container(height: statusBarHeight.value),
         Container(
           child: _loading
               ? const SizedBox(

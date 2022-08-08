@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/components/button.dart';
-import 'package:wolofbat/theme/color.dart';
 
 class Avatar extends StatelessWidget {
   final double size;
@@ -27,14 +26,14 @@ class Avatar extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  color: darken(Theme.of(context).primaryColorLight, .02),
+                  color: Theme.of(context).primaryColorDark.withOpacity(.05),
                   width: size,
                   height: size,
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
                     'assets/svgs/avatar.svg',
                     width: size * .6,
-                    color: darken(Theme.of(context).primaryColorLight, .08),
+                    color: Theme.of(context).primaryColorDark.withOpacity(.1),
                   ),
                 ),
                 // const Positioned.fill(

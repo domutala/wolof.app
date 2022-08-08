@@ -1,12 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wolofbat/routes/index.dart';
 import 'package:wolofbat/theme/settings.dart';
+import 'firebase_options.dart';
 
 final statusBarHeight = ValueNotifier<double>(0);
 final currentTab = ValueNotifier<int>(0);
 
-void main() {
+// C:\Program Files (x86)\Java\jre1.8.0_333
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   return runApp(
     ChangeNotifierProvider<ThemeNotifier>(
       create: (_) => ThemeNotifier(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/components/button.dart';
+import 'package:wolofbat/main.dart';
 import 'package:wolofbat/theme/index.dart';
 import 'package:wolofbat/widgets/loader.dart';
 
@@ -42,6 +43,7 @@ class _AddState extends State<Add> with AutomaticKeepAliveClientMixin<Add> {
       children: [
         Column(
           children: [
+            Container(height: statusBarHeight.value),
             const SizedBox(
               height: 3,
               child: Loader(),

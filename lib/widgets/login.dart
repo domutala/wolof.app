@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
+import 'package:wolofbat/utils/firebase.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -34,7 +35,9 @@ class _LoginState extends State<Login> {
                         Button(
                           // theme: 'dark',
                           padding: 12,
-                          onPressed: () {},
+                          onPressed: () {
+                            init();
+                          },
                           child: Row(
                             children: [
                               SvgPicture.asset(
@@ -50,7 +53,9 @@ class _LoginState extends State<Login> {
                         Button(
                           // theme: 'dark',
                           padding: 12,
-                          onPressed: () {},
+                          onPressed: () {
+                            init(credential: 'facebook');
+                          },
                           child: Row(
                             children: [
                               SvgPicture.asset(

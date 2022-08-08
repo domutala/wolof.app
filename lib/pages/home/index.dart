@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage>
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: Theme.of(context).primaryColorDark.withOpacity(.1),
+            color: Theme.of(context).primaryColorDark.withOpacity(.05),
           ),
         ),
       ),
