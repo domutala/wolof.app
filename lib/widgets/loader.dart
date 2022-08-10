@@ -6,8 +6,17 @@ import 'package:wolofbat/theme/color.dart';
 
 class Loader extends StatefulWidget {
   final Color? color;
+  final double? width;
+  final double? height;
+  final double radius;
 
-  const Loader({Key? key, this.color}) : super(key: key);
+  const Loader({
+    Key? key,
+    this.color,
+    this.width,
+    this.height,
+    this.radius = 0,
+  }) : super(key: key);
 
   @override
   State<Loader> createState() => _LoaderState();
@@ -43,28 +52,31 @@ class _LoaderState extends State<Loader> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: key,
-      color: _color,
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Container(
-            width: 250,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  _color.withOpacity(0),
-                  darken(_color, .5),
-                  _color.withOpacity(0),
-                ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(widget.radius),
+      child: Container(
+        key: key,
+        color: _color,
+        width: widget.width,
+        height: widget.height,
+        child: Stack(
+          children: [
+            Container(
+              width: 250,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    _color.withOpacity(0),
+                    darken(_color, .5),
+                    _color.withOpacity(0),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

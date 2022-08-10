@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
+import 'package:wolofbat/models/user.dart';
 import 'package:wolofbat/theme/input.dart';
 import 'package:wolofbat/widgets/avatar.dart';
 
@@ -14,18 +16,61 @@ class Explorer extends StatefulWidget {
 
 class _ExplorerState extends State<Explorer>
     with AutomaticKeepAliveClientMixin<Explorer> {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() {
+    mUser.addListener(onUser);
+  }
+
+  onUser() {
+    setState(() {});
+  }
+
   Widget get header {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Row(
+    return Container(
+      color: Theme.of(context).primaryColorDark.withOpacity(.05),
+      child: Column(
         children: [
-          Expanded(
-            child: Text(
-              'Baat',
-              style: Theme.of(context).textTheme.headline6,
+          Container(height: statusBarHeight.value),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Baatukay',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+                SizedBox(
+                  width: 42,
+                  height: 42,
+                  child: Button(
+                    padding: 0,
+                    radius: 'circle',
+                    theme: 'light',
+                    onPressed: () {
+                      if (mUser.value == null) {
+                        Navigator.of(context).pushNamed('login');
+                      } else {
+                        Navigator.of(context).pushNamed('user:show',
+                            arguments: {'id': mUser.value!.id});
+                      }
+                    },
+                    child: Avatar(
+                      size: 42,
+                      user: mUser.value,
+                      key: Key(mUser.value.toString()),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const Avatar(),
         ],
       ),
     );
@@ -49,7 +94,7 @@ class _ExplorerState extends State<Explorer>
                       enabled: false,
                       decoration: InputDecoration(
                         filled: true,
-                        hintText: 'Rechercher...',
+                        hintText: 'Seetal ci baatukay wi...',
                         fillColor:
                             Theme.of(context).primaryColorDark.withOpacity(.1),
                         disabledBorder: inputBorder.copyWith(
@@ -77,9 +122,26 @@ class _ExplorerState extends State<Explorer>
 
     return Column(
       children: [
-        Container(height: statusBarHeight.value),
         header,
         body,
+        SizedBox(
+          height: 120,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Button(
+                  theme: 'light',
+                  child: Text('Baatu bës bi'),
+                ),
+                Button(
+                  theme: 'light',
+                  child: Text('Li gënë fës ci ay baat'),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

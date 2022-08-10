@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
+import 'package:wolofbat/service/session.dart' as session_service;
+import 'package:wolofbat/utils/rsa.dart' as rsa;
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -16,10 +19,15 @@ class _StartPageState extends State<StartPage> {
   }
 
   init() async {
+    await rsa.init();
+    if (await session_service.init()) next();
+  }
+
+  next() async {
     await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      Navigator.of(context).pushReplacementNamed('home');
-    }
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushReplacementNamed('home');
   }
 
   @override
@@ -33,7 +41,12 @@ class _StartPageState extends State<StartPage> {
           children: [
             GestureDetector(
               onTap: init,
-              child: const Center(child: Text('start')),
+              child: Center(
+                child: Button(
+                  onPressed: init,
+                  child: const Text('start'),
+                ),
+              ),
             ),
           ],
         ),

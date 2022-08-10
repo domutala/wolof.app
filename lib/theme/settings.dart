@@ -1,11 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:wolofbat/theme/index.dart';
 import 'package:wolofbat/theme/theme.dart';
+
+final themeMode = ValueNotifier<String?>(null);
+final themeToggle = ValueNotifier<bool>(true);
 
 class StorageManager {
   static Future<void> saveData(String key, dynamic value) async {
@@ -47,15 +48,8 @@ class ThemeNotifier with ChangeNotifier {
       var mode = await StorageManager.readData('themeMode');
       setMode(mode);
     };
-    // StorageManager.readData('themeMode').then((value) {
-    //   var themeMode = value ?? 'light';
-    //   if (themeMode == 'light') {
-    //     _themeData = theme;
-    //   } else {
-    //     _themeData = darkTheme;
-    //   }
-    //   notifyListeners();
-    // });
+
+    themeToggle.addListener(toggleMode);
   }
 
   void toggleMode() {
@@ -71,7 +65,7 @@ class ThemeNotifier with ChangeNotifier {
   }
 
   void setMode([String? mode]) async {
-    log(mode.toString());
+    themeMode.value = mode;
     await StorageManager.saveData('themeMode', mode);
     setTheme(mode);
   }

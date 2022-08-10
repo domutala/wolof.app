@@ -6,8 +6,6 @@ import 'package:wolofbat/theme/settings.dart';
 import 'firebase_options.dart';
 
 final statusBarHeight = ValueNotifier<double>(0);
-final currentTab = ValueNotifier<int>(0);
-
 // C:\Program Files (x86)\Java\jre1.8.0_333
 
 void main() async {

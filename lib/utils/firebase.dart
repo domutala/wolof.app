@@ -48,7 +48,7 @@ Future<UserCredential?> facebook() async {
   );
 }
 
-Future<dynamic> init({
+Future<String?> init({
   String credential = "google",
 }) async {
   UserCredential? user;
@@ -59,7 +59,7 @@ Future<dynamic> init({
     user = await facebook();
   }
 
-  if (user == null) return false;
+  if (user == null) return null;
 
-  return user;
+  return user.user?.uid;
 }

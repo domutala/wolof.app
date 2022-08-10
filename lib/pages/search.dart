@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/main.dart';
+import 'package:wolofbat/service/word.dart' as service_word;
 import 'package:wolofbat/theme/color.dart';
 import 'package:wolofbat/theme/input.dart';
 import 'package:wolofbat/widgets/word.dart';
@@ -13,7 +14,36 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  bool searching = false;
+  int _mark = 0;
+  bool _searching = false;
+  List<String> _ids = [];
+  final TextEditingController _controler = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  init() {}
+
+  filter() async {
+    var mymark = _mark + 1;
+    setState(() => _mark = mymark);
+
+    if (_controler.text.isEmpty) {
+      setState(() => _searching = false);
+      setState(() => _ids = []);
+      return;
+    }
+
+    setState(() => _searching = true);
+
+    var ids = await service_word.filter({'value': _controler.text});
+    if (_mark != mymark) return;
+
+    setState(() => _ids = ids ?? []);
+    setState(() => _searching = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +56,14 @@ class _SearchPageState extends State<SearchPage> {
               TextField(
                 autofocus: true,
                 textInputAction: TextInputAction.search,
+                controller: _controler,
+                onChanged: (text) {
+                  setState(() {});
+                  filter();
+                },
+                onSubmitted: (value) => filter(),
                 decoration: InputDecoration(
-                  hintText: 'Rechercher...',
+                  hintText: 'Bindël baat bi nga soxla...',
                   focusedBorder: inputBorder.copyWith(
                     borderSide: const BorderSide(
                       width: 0,
@@ -57,7 +93,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   suffixIcon: SizedBox(
-                    child: searching
+                    child: _searching
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
@@ -91,7 +127,7 @@ class _SearchPageState extends State<SearchPage> {
                 padding: const EdgeInsets.symmetric(vertical: 25),
                 child: Column(
                   children: [
-                    for (var i = 0; i < 5; i++) WordListOne(id: i.toString()),
+                    for (var id in _ids) WordListOne(id: id, key: Key(id)),
                   ],
                 ),
               ),

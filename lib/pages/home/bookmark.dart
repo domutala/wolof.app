@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/main.dart';
-import 'package:wolofbat/widgets/loader.dart';
+import 'package:wolofbat/models/word.dart';
 import 'package:wolofbat/widgets/word.dart';
 
 class Bookmark extends StatefulWidget {
@@ -15,9 +15,6 @@ class Bookmark extends StatefulWidget {
 
 class _BookmarkState extends State<Bookmark>
     with AutomaticKeepAliveClientMixin<Bookmark> {
-  List<String> _ids = [];
-  bool _loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -25,30 +22,8 @@ class _BookmarkState extends State<Bookmark>
   }
 
   init() async {
-    load();
-  }
-
-  load() async {
-    setState(() => _loading = true);
-    await Future.delayed(const Duration(seconds: 3));
-
-    setState(() {
-      _ids = [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12'
-      ];
-      _loading = false;
+    mBookmark.addListener(() {
+      setState(() {});
     });
   }
 
@@ -77,7 +52,7 @@ class _BookmarkState extends State<Bookmark>
   Widget get list {
     return Column(
       children: [
-        for (var id in _ids) WordListOne(id: id.toString()),
+        for (var id in mBookmark.value) WordListOne(id: id, key: Key(id)),
       ],
     );
   }
@@ -88,23 +63,10 @@ class _BookmarkState extends State<Bookmark>
     return Column(
       children: [
         Container(height: statusBarHeight.value),
-        Container(
-          child: _loading
-              ? const SizedBox(
-                  height: 3,
-                  child: Loader(),
-                )
-              : null,
-        ),
         Expanded(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await load();
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: _ids.isEmpty ? empty : list,
-            ),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: mBookmark.value.isEmpty ? empty : list,
           ),
         ),
       ],

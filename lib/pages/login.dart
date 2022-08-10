@@ -11,6 +11,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return const Login();
+    return Login(
+      onLogged: () {
+        Navigator.of(context).pop();
+      },
+    );
   }
 }
