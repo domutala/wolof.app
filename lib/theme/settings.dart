@@ -1,76 +1,42 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/theme/index.dart';
-import 'package:wolofbat/theme/theme.dart';
+import 'package:wolofbat/utils/store.dart';
 
 final themeMode = ValueNotifier<String?>(null);
-final themeToggle = ValueNotifier<bool>(true);
 
-class StorageManager {
-  static Future<void> saveData(String key, dynamic value) async {
-    final prefs = await SharedPreferences.getInstance();
-    if (value == null) {
-      prefs.remove(key);
-    } else if (value is int) {
-      prefs.setInt(key, value);
-    } else if (value is String) {
-      prefs.setString(key, value);
-    } else if (value is bool) {
-      prefs.setBool(key, value);
-    }
-  }
-
-  static Future<dynamic> readData(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    dynamic obj = prefs.get(key);
-    return obj;
-  }
-
-  static Future<bool> deleteData(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.remove(key);
-  }
-}
-
-class ThemeNotifier with ChangeNotifier {
-  ThemeData _themeData = theme;
-  String? _mode;
-
-  ThemeData getTheme() => _themeData;
-  String? getMode() => _mode;
-
-  ThemeNotifier() {
-    setTheme();
+class ThemeSettings {
+  static init() async {
     final window = WidgetsBinding.instance.window;
     window.onPlatformBrightnessChanged = () async {
       var mode = await StorageManager.readData('themeMode');
       setMode(mode);
     };
 
-    themeToggle.addListener(toggleMode);
+    var mode = await StorageManager.readData('themeMode');
+    setMode(mode);
   }
 
-  void toggleMode() {
-    StorageManager.readData('themeMode').then((mode) async {
-      mode = mode == 'dark'
-          ? 'light'
-          : mode == 'light'
-              ? null
-              : 'dark';
+  static toggle() async {
+    var mode = await StorageManager.readData('themeMode');
+    mode = mode == 'dark'
+        ? 'light'
+        : mode == 'light'
+            ? null
+            : 'dark';
 
-      setMode(mode);
-    });
+    setMode(mode);
   }
 
-  void setMode([String? mode]) async {
+  static setMode([String? mode]) async {
     themeMode.value = mode;
     await StorageManager.saveData('themeMode', mode);
     setTheme(mode);
   }
 
-  void setTheme([String? mode]) async {
+  static setTheme([String? mode]) async {
     String nmode;
 
     if (mode == null) {
@@ -81,15 +47,14 @@ class ThemeNotifier with ChangeNotifier {
       nmode = mode;
     }
 
-    _themeData = nmode == 'light' ? theme : darkTheme;
-    _mode = mode;
+    OneContext()
+        .oneTheme
+        .changeMode(nmode == 'dark' ? ThemeMode.dark : ThemeMode.light);
 
-    StorageManager.saveData('themeMode', mode);
-    notifyListeners();
     setNavBarColor(nmode);
   }
 
-  setNavBarColor(String mode) {
+  static setNavBarColor(String mode) {
     if (mode == 'light') {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,

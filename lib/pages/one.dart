@@ -64,15 +64,29 @@ class _OnePageState extends State<OnePage> {
 
   Widget get body {
     return Expanded(
-      child: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 600),
-              child: Column(
-                children: const [],
-              ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Tur wi',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Theme.of(context).primaryColor),
+                ),
+                for (var i = 1; i <= 3; i++)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      '$i. day ab baatukaay bu ubbeku te ku ne man a soppi ku ne man na fee dugal ab baat bu bees',
+                    ),
+                  ),
+              ],
             ),
           ),
         ),

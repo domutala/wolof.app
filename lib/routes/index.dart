@@ -6,6 +6,7 @@ import 'package:wolofbat/pages/one.dart';
 import 'package:wolofbat/pages/search.dart';
 import 'package:wolofbat/pages/start.dart';
 import 'package:wolofbat/pages/user/show.dart';
+import 'package:wolofbat/pages/user/update.dart';
 
 Widget rt(Widget page, [String? name]) {
   return page;
@@ -18,6 +19,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   "search": (_) => rt(const SearchPage(), "search"),
   "create": (_) => rt(const CreatePage(), "create"),
   "user:show": (_) => rt(UserShowPage(args: getArguments(_)), "user:show"),
+  "user:update": (_) => rt(const UserUpdatePage(), "user:show"),
   "one": (_) => rt(OnePage(args: getArguments(_)), "one"),
 };
 

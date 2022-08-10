@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/models/word.dart';
 import 'package:wolofbat/service/word.dart' as service_word;
@@ -26,7 +27,10 @@ class _WordListOneState extends State<WordListOne> {
 
   double size() {
     var max = MediaQuery.of(context).size.width - 60;
-    return Random().nextDouble() * max;
+    var w = 120 + Random().nextDouble() * max;
+    w = max < w ? max : w;
+
+    return w;
   }
 
   init() async {
@@ -74,10 +78,7 @@ class _WordListOneState extends State<WordListOne> {
             radius: 'square',
             theme: 'light',
             onPressed: () {
-              Navigator.of(context).pushNamed(
-                'one',
-                arguments: {'id': widget.id},
-              );
+              OneContext().pushNamed('one', arguments: {'id': widget.id});
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -100,8 +101,7 @@ class _WordListOneState extends State<WordListOne> {
                                   // strutStyle: StrutStyle(fontSize: 12.0),
                                   maxLines: 2,
                                   text: TextSpan(
-                                    text:
-                                        'Select other important details like Organization, your preferred Android Language and iOS Language as well. Then click on Finish to create new flutter project.',
+                                    text: _word!.params.mean,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall!

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/widgets/login.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Login(
       onLogged: () {
-        Navigator.of(context).pop();
+        OneContext().pushNamedAndRemoveUntil('start', (route) => false);
       },
     );
   }

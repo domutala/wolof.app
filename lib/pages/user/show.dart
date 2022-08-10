@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/models/user.dart';
 import 'package:wolofbat/service/user.dart' as service_user;
+import 'package:wolofbat/theme/settings.dart';
 import 'package:wolofbat/widgets/avatar.dart';
-import 'package:wolofbat/widgets/avatar_update.dart';
 import 'package:wolofbat/widgets/loader.dart';
-import 'package:wolofbat/widgets/modal_bottom.dart';
-import 'package:wolofbat/widgets/theme_button.dart';
 
 class UserShowPage extends StatefulWidget {
   final dynamic args;
@@ -28,6 +24,8 @@ class _UserShowPageState extends State<UserShowPage> {
   }
 
   init() async {
+    themeMode.addListener(updateState);
+
     if (widget.args == null) return;
     setState(() => _loading = true);
 
@@ -37,15 +35,8 @@ class _UserShowPageState extends State<UserShowPage> {
     setState(() {});
   }
 
-  updateAvatar() async {
-    showModalBottom(
-      context: context,
-      child: AvatarUpdate(onFinish: (user) {
-        Navigator.of(context).pop();
-        _user = user;
-        setState(() {});
-      }),
-    );
+  updateState() {
+    setState(() {});
   }
 
   Widget get loader {
@@ -79,13 +70,7 @@ class _UserShowPageState extends State<UserShowPage> {
   }
 
   Widget get avatar {
-    return Button(
-      padding: 0,
-      radius: 'circle',
-      theme: 'light',
-      onPressed: updateAvatar,
-      child: Avatar(size: 96, user: _user),
-    );
+    return Avatar(size: 96, user: _user);
   }
 
   Widget get body {
@@ -93,51 +78,30 @@ class _UserShowPageState extends State<UserShowPage> {
       children: [
         Expanded(
           child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  avatar,
-                  const SizedBox(height: 10),
-                  Text(
-                    _user!.params.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(fontWeight: FontWeight.bold),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      avatar,
+                      const SizedBox(height: 10),
+                      Text(
+                        _user!.params.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 50),
+                    ],
                   ),
-                  const SizedBox(height: 30),
-                  const ThemeButton(),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          height: 120,
-          child: Center(
-            child: Button(
-              radius: 'circle',
-              // onPressed: save,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    'assets/svgs/logout.svg',
-                    width: 24,
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    "Génn",
-                    overflow: TextOverflow.ellipsis,
-                    // style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
       ],
     );
   }
@@ -154,5 +118,11 @@ class _UserShowPageState extends State<UserShowPage> {
               ? const Text('null')
               : body,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    themeMode.removeListener(updateState);
   }
 }

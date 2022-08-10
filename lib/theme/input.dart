@@ -31,7 +31,7 @@ var inputDecorationTheme = InputDecorationTheme(
     borderSide: BorderSide(color: dangerColor, width: 3),
   ),
   focusedBorder: inputBorder.copyWith(
-    borderSide: BorderSide(color: darkColor, width: 3),
+    borderSide: BorderSide(color: darkColor.withOpacity(.5), width: 3),
   ),
   filled: false,
   fillColor: lightColor,
@@ -53,7 +53,7 @@ var inputDecorationThemeDark = inputDecorationTheme.copyWith(
     borderSide: BorderSide(color: dangerColor, width: 3),
   ),
   focusedBorder: inputBorderDark.copyWith(
-    borderSide: BorderSide(color: lightColor, width: 3),
+    borderSide: BorderSide(color: lightColor.withOpacity(.5), width: 3),
   ),
   fillColor: darkColor,
 );

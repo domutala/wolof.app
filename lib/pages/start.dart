@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
 import 'package:wolofbat/service/session.dart' as session_service;
@@ -27,7 +28,7 @@ class _StartPageState extends State<StartPage> {
     await Future.delayed(const Duration(seconds: 2));
 
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacementNamed('home');
+    OneContext().pushReplacementNamed('home');
   }
 
   @override

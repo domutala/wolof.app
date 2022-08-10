@@ -22,9 +22,11 @@ class _BookmarkState extends State<Bookmark>
   }
 
   init() async {
-    mBookmark.addListener(() {
-      setState(() {});
-    });
+    mBookmark.addListener(updateState);
+  }
+
+  updateState() {
+    setState(() {});
   }
 
   Widget get empty {
@@ -75,4 +77,10 @@ class _BookmarkState extends State<Bookmark>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    super.dispose();
+    mBookmark.removeListener(updateState);
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wolofbat/service/session.dart' as service_session;
 import 'package:wolofbat/theme/index.dart';
 import 'package:wolofbat/utils/rsa.dart';
 import 'package:wolofbat/utils/store.dart';
@@ -119,12 +120,22 @@ class Server {
   static showError(response) async {
     var message = response.toString();
 
-    // if (response is dio.DioError) {
-    //   message = response.message;
-    // }
-
     if (response is dio.DioError) {
       message = "Impossible d'accéder au serveur.";
+    }
+
+    if (message == "session:required") {
+      await service_session.clearSessionInfos();
+      await service_session.init();
+
+      message = "Une erreur innatendue s'est produit. Veuillez recommencer.";
+    }
+
+    if (message == "session:haveAlreadyUser") {
+      await service_session.clearSessionInfos();
+      await service_session.init();
+
+      message = "Une erreur innatendue s'est produit. Veuillez recommencer.";
     }
 
     Fluttertoast.showToast(

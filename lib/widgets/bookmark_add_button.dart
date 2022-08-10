@@ -39,6 +39,11 @@ class _BookmarkAddButtonState extends State<BookmarkAddButton> {
         style: Theme.of(context).textButtonTheme.style!.copyWith(
               padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
               backgroundColor: MaterialStateProperty.all(Colors.transparent),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
             ),
         child: SvgPicture.asset(
           'assets/svgs/bookmark.svg',

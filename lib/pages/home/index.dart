@@ -4,6 +4,7 @@ import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/pages/home/add.dart';
 import 'package:wolofbat/pages/home/bookmark.dart';
 import 'package:wolofbat/pages/home/explorer.dart';
+import 'package:wolofbat/pages/home/settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage>
   }
 
   init() async {
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(() => setState(() {}));
   }
 
@@ -63,6 +64,14 @@ class _HomePageState extends State<HomePage>
               _tabController.animateTo(2);
             },
           ),
+          NavItem(
+            iconPath: 'assets/svgs/cogs.svg',
+            text: 'Settings',
+            active: _tabController.index == 3,
+            onPressed: () {
+              _tabController.animateTo(3);
+            },
+          ),
         ],
       ),
     );
@@ -70,23 +79,29 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        body: TabBarView(
-          controller: _tabController,
-          children: const [
-            Explorer(),
-            Add(),
-            Bookmark(),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_tabController.index != 0) {
+          _tabController.animateTo(0);
+          return false;
+        }
+
+        return true;
+      },
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          body: TabBarView(
+            controller: _tabController,
+            children: const [
+              Explorer(),
+              Add(),
+              Bookmark(),
+              Settings(),
+            ],
+          ),
+          bottomNavigationBar: navs,
         ),
-        bottomNavigationBar: navs,
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () => _tabController
-        //       .animateTo((_tabController.index + 1) % 2), // Switch tabs
-        //   child: Icon(Icons.swap_horiz),
-        // ),
       ),
     );
   }

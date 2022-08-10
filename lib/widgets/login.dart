@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
 import 'package:wolofbat/service/session.dart' as session;
 import 'package:wolofbat/widgets/loading.dart';
+import 'package:wolofbat/widgets/modal_bottom.dart';
 
 class Login extends StatefulWidget {
   final Function? onLogged;
@@ -104,4 +106,10 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+}
+
+openLoginInModal() {
+  showModalBottom(child: Login(onLogged: () {
+    OneContext().popDialog('success');
+  }));
 }

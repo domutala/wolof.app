@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 import 'package:wolofbat/components/button.dart';
 import 'package:wolofbat/main.dart';
 import 'package:wolofbat/models/user.dart';
 import 'package:wolofbat/theme/input.dart';
 import 'package:wolofbat/widgets/avatar.dart';
+import 'package:wolofbat/widgets/login.dart';
 
 class Explorer extends StatefulWidget {
   const Explorer({
@@ -55,9 +57,9 @@ class _ExplorerState extends State<Explorer>
                     theme: 'light',
                     onPressed: () {
                       if (mUser.value == null) {
-                        Navigator.of(context).pushNamed('login');
+                        openLoginInModal();
                       } else {
-                        Navigator.of(context).pushNamed('user:show',
+                        OneContext().pushNamed('user:show',
                             arguments: {'id': mUser.value!.id});
                       }
                     },
@@ -88,7 +90,7 @@ class _ExplorerState extends State<Explorer>
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('search');
+                      OneContext().pushNamed('search');
                     },
                     child: TextField(
                       enabled: false,
@@ -148,4 +150,10 @@ class _ExplorerState extends State<Explorer>
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    super.dispose();
+    mUser.removeListener(onUser);
+  }
 }

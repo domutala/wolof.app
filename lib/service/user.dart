@@ -25,3 +25,20 @@ Future<MUser?> updateAvatar(String file) async {
 
   return user;
 }
+
+Future<MUser?> updateName(String name) async {
+  var res = await Server.req(
+    path: '/user/update/name',
+    body: {'name': name},
+  );
+  if (res == null) return null;
+
+  var user = MUser.fromJson(res);
+
+  if (mUser.value != null && mUser.value!.id == user.id) {
+    await Store.save(key: 'session.user', value: res);
+    mUser.value = user;
+  }
+
+  return user;
+}

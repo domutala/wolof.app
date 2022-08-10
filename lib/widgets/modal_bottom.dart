@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
+import 'package:wolofbat/theme/color.dart';
+import 'package:wolofbat/theme/index.dart';
 
 showModalBottom({
-  required BuildContext context,
   required Widget child,
   double marginTop = 0,
   bool enableDrag = true,
   AnimationController? animationController,
 }) {
-  showModalBottomSheet(
+  var isDarkMode = OneContext().oneTheme.isDark;
+
+  OneContext().showModalBottomSheet(
     isScrollControlled: true,
-    context: context,
     enableDrag: enableDrag,
-    barrierColor: Theme.of(context).primaryColorDark.withOpacity(.2),
-    backgroundColor: Theme.of(context).primaryColorLight,
+    barrierColor:
+        isDarkMode ? lightColor.withOpacity(.07) : darkColor.withOpacity(.3),
+    backgroundColor: OneContext().theme.primaryColorLight,
     transitionAnimationController: animationController,
-    elevation: 50,
+    elevation: 0,
     builder: (context) {
       return Container(
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height - marginTop,
+          maxHeight: OneContext().mediaQuery.size.height - marginTop,
+        ),
+        decoration: BoxDecoration(
+          color: OneContext().theme.primaryColorLight,
+          boxShadow: [
+            BoxShadow(
+              color: darken(darkColor, .25).withOpacity(.3),
+              spreadRadius: 5,
+              blurRadius: 15,
+              offset: const Offset(0, 3),
+            )
+          ],
         ),
         width: double.infinity,
-        color: Theme.of(context).primaryColorLight,
         child: Padding(
-          padding: MediaQuery.of(context).viewInsets,
+          padding: OneContext().mediaQuery.viewInsets,
           child: child,
         ),
       );

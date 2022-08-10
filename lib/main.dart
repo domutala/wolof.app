@@ -1,43 +1,53 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:one_context/one_context.dart';
+import 'package:wolofbat/firebase_options.dart';
 import 'package:wolofbat/routes/index.dart';
 import 'package:wolofbat/theme/settings.dart';
-import 'firebase_options.dart';
+import 'package:wolofbat/theme/theme.dart' as th;
 
 final statusBarHeight = ValueNotifier<double>(0);
-// C:\Program Files (x86)\Java\jre1.8.0_333
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  return runApp(
-    ChangeNotifierProvider<ThemeNotifier>(
-      create: (_) => ThemeNotifier(),
-      child: const MyApp(),
-    ),
-  );
+  OnePlatform.app = () => MyApp();
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      ThemeSettings.init();
+    });
+  }
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeNotifier>(
-      builder: (context, theme, _) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: theme.getTheme(),
-        routes: routes,
-        initialRoute: 'start',
-        // home: const HomePage(),
-      ),
+    return OneNotification<List<Locale>>(
+      stopBubbling: true,
+      rebuildOnNull: true,
+      builder: (context, dataLocale) {
+        return OneNotification<OneThemeChangerEvent>(
+          stopBubbling: true,
+          builder: (context, data) {
+            // ThemeSettings.init();
+
+            return MaterialApp(
+              navigatorObservers: [OneContext().heroController],
+              debugShowCheckedModeBanner: false,
+              themeMode: OneThemeController.initThemeMode(ThemeMode.light),
+              theme: OneThemeController.initThemeData(th.theme),
+              darkTheme: OneThemeController.initDarkThemeData(th.darkTheme),
+              builder: OneContext().builder,
+              navigatorKey: OneContext().key,
+              routes: routes,
+              initialRoute: 'start',
+            );
+          },
+        );
+      },
     );
   }
 }
