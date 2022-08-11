@@ -4,6 +4,8 @@ import 'package:wolofbat/models/word.dart';
 import 'package:wolofbat/service/word.dart' as service_word;
 import 'package:wolofbat/widgets/bookmark_add_button.dart';
 import 'package:wolofbat/widgets/loading.dart';
+import 'package:wolofbat/widgets/word/mean/show.dart';
+import 'package:wolofbat/widgets/word/value/show.dart';
 
 class OnePage extends StatefulWidget {
   final dynamic args;
@@ -70,22 +72,9 @@ class _OnePageState extends State<OnePage> {
           child: Container(
             constraints: const BoxConstraints(maxWidth: 600),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Tur wi',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Theme.of(context).primaryColor),
-                ),
-                for (var i = 1; i <= 3; i++)
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      '$i. day ab baatukaay bu ubbeku te ku ne man a soppi ku ne man na fee dugal ab baat bu bees',
-                    ),
-                  ),
+                WordValueShow(word: _word!),
+                WordMeanShow(word: _word!),
               ],
             ),
           ),

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
       child: Row(
         children: [
           NavItem(
-            iconPath: 'assets/svgs/list.svg',
+            iconPath: 'assets/svgs/loupe.svg',
             text: 'Explorer',
             active: _tabController.index == 0,
             onPressed: () {

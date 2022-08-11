@@ -1,6 +1,7 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:one_context/one_context.dart';
 // import 'package:shimmer/shimmer.dart';
 import 'package:wolofbat/theme/color.dart';
 
@@ -46,7 +47,6 @@ class _LoaderState extends State<Loader> {
 
   anime() async {
     await Future.delayed(const Duration(milliseconds: 100));
-    log(width.toString());
     anime();
   }
 
@@ -80,4 +80,11 @@ class _LoaderState extends State<Loader> {
       ),
     );
   }
+}
+
+double randomLoaderSize() {
+  var max = OneContext().mediaQuery.size.width - 60;
+  var w = 120 + Random().nextDouble() * max;
+  w = max < w ? max - (Random().nextDouble() * 80) : w;
+  return w;
 }

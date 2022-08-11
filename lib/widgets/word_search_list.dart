@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wolofbat/service/word.dart' as service_word;
-import 'package:wolofbat/widgets/word.dart';
+import 'package:wolofbat/widgets/word/list_one.dart';
 
 class WordSearchList extends StatefulWidget {
   final Function(bool loading)? onLoading;

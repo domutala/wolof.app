@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:one_context/one_context.dart';
 import 'package:wolofbat/components/button.dart';
@@ -25,14 +23,6 @@ class _WordListOneState extends State<WordListOne> {
     init();
   }
 
-  double size() {
-    var max = MediaQuery.of(context).size.width - 60;
-    var w = 120 + Random().nextDouble() * max;
-    w = max < w ? max : w;
-
-    return w;
-  }
-
   init() async {
     setState(() => _loading = true);
     var word = await service_word.get(widget.id);
@@ -56,11 +46,11 @@ class _WordListOneState extends State<WordListOne> {
             children: [
               const Loader(width: 150, height: 15, radius: 5),
               const SizedBox(height: 2),
-              Loader(width: size(), height: 7, radius: 5),
+              Loader(width: randomLoaderSize(), height: 7, radius: 5),
               const SizedBox(height: 2),
-              Loader(width: size(), height: 7, radius: 5),
+              Loader(width: randomLoaderSize(), height: 7, radius: 5),
               const SizedBox(height: 2),
-              Loader(width: size(), height: 7, radius: 5),
+              Loader(width: randomLoaderSize(), height: 7, radius: 5),
             ],
           ),
         ),
@@ -98,7 +88,6 @@ class _WordListOneState extends State<WordListOne> {
                           child: _word!.params.mean != null
                               ? RichText(
                                   overflow: TextOverflow.ellipsis,
-                                  // strutStyle: StrutStyle(fontSize: 12.0),
                                   maxLines: 2,
                                   text: TextSpan(
                                     text: _word!.params.mean,

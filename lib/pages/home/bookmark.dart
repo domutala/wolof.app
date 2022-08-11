@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wolofbat/main.dart';
 import 'package:wolofbat/models/word.dart';
-import 'package:wolofbat/widgets/word.dart';
+import 'package:wolofbat/widgets/word/list_one.dart';
 
 class Bookmark extends StatefulWidget {
   const Bookmark({

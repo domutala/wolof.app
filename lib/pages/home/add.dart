@@ -8,7 +8,7 @@ import 'package:wolofbat/models/user.dart';
 import 'package:wolofbat/theme/color.dart';
 import 'package:wolofbat/theme/index.dart';
 import 'package:wolofbat/theme/input.dart';
-import 'package:wolofbat/widgets/word.dart';
+import 'package:wolofbat/widgets/word/list_one.dart';
 import 'package:wolofbat/service/word.dart' as service_word;
 
 class Add extends StatefulWidget {

@@ -34,7 +34,7 @@ class _ExplorerState extends State<Explorer>
 
   Widget get header {
     return Container(
-      color: Theme.of(context).primaryColorDark.withOpacity(.05),
+      color: Theme.of(context).primaryColor.withOpacity(.05),
       child: Column(
         children: [
           Container(height: statusBarHeight.value),

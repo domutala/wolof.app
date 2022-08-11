@@ -4,7 +4,7 @@ import 'package:wolofbat/main.dart';
 import 'package:wolofbat/service/word.dart' as service_word;
 import 'package:wolofbat/theme/color.dart';
 import 'package:wolofbat/theme/input.dart';
-import 'package:wolofbat/widgets/word.dart';
+import 'package:wolofbat/widgets/word/list_one.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
